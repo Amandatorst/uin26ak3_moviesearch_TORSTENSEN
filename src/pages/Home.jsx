@@ -43,18 +43,41 @@ export default function Home(){
 
     console.log(history)
 
+
+
+
     return(
     <main>
         <h1>Forside</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}> {/*Skjema for å søke etter filmer*/}
             <label>
                 Søk etter film
-            <input type="search" placeholder="Care Bears" onChange={handleChange} onFocus={()=> setFocused(true)} /*onBlur={()=> setFocused(false)}></label*/></input>
+            <input type="search" placeholder="Care Bears" onChange={handleChange} onFocus={()=> setFocused(true)} ></input>
             </label>
             {focused ? <History history={history} setSearch={setSearch}/> : null}
-            <button onClick={getMovies}>Søk</button>
+            <button onClick={getMovies}>Søk</button> {/*Endre til at søket trigges ved minimun tre tegn er skrevet*/}
         </form>
         
+        <section id= "bondFilmer">
+        <h2>James Bond</h2>
+        {/*Sett inn funksjon for å vise ti James Bond filmer med tittel, bilde, og utgivelsesår her */}
+       
+       
+
+     
+        </section>
+
+
+
+
+        <section id= "alleFilmer">
+            <h2>Alle filmer</h2>
+             {/*Sett inn funksjon for å vise ti vanlige filmer med tittel, bilde, og utgivelsesår her */}
+
+            </section>
+        
+
+
     </main>
     )
 }
