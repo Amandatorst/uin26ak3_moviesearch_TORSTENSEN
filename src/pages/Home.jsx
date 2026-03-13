@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import History from "../components/History"
+import Bond from "../components/Bond"
+import OtherMovies from "../components/OtherMovies"
 
 export default function Home(){
     const [search, setSearch] = useState()
@@ -44,8 +46,6 @@ export default function Home(){
     console.log(history)
 
 
-
-
     return(
     <main>
         <h1>Forside</h1>
@@ -58,25 +58,22 @@ export default function Home(){
             <button onClick={getMovies}>Søk</button> {/*Endre til at søket trigges ved minimun tre tegn er skrevet*/}
         </form>
         
-        <section id= "bondFilmer">
-        <h2>James Bond</h2>
-        {/*Sett inn funksjon for å vise ti James Bond filmer med tittel, bilde, og utgivelsesår her */}
-       
        
 
-     
+
+        <section id="bondFilmer">
+        <h2>James Bond</h2>
+            <ul className="screen">
+                <Bond />        {/*Sett inn funksjon for å vise ti James Bond filmer med tittel, bilde, og utgivelsesår her */}
+            </ul>
         </section>
 
-
-
-
-        <section id= "alleFilmer">
-            <h2>Alle filmer</h2>
-             {/*Sett inn funksjon for å vise ti vanlige filmer med tittel, bilde, og utgivelsesår her */}
-
-            </section>
-        
-
+        <section id="alleFilmer">
+        <h2>Andre filmer</h2>
+            <ul className="screen">
+                <OtherMovies />             {/*Sett inn funksjon for å vise ti vanlige filmer med tittel, bilde, og utgivelsesår her */}
+            </ul>
+        </section>
 
     </main>
     )

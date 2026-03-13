@@ -16,3 +16,9 @@ function App() {
 }
 
 export default App
+
+
+/*  Chatpgt: https://chatgpt.com/share/69b31fdc-f440-8004-adab-89224bccdf82
+    Lenke til bakgrunnsbilde: https://no.pinterest.com/pin/9148005521956875/
+*/
+
