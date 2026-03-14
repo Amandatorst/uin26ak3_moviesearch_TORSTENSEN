@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
+
 
 export default function Bond(){
-
-    
 
   const [bondMovies, setBondMovies] = useState([])
   const apiKey = import.meta.env.VITE_APP_API_KEY
@@ -24,28 +24,21 @@ export default function Bond(){
 
   }, [])
 
+  
   return (
 
     <>
       {bondMovies.map(movie => (
-
         <article key={movie.imdbID}>
-
-          <Link to={`/${movie.Title}`}>
-
-            {movie.Poster !== "N/A"
-              ? <img src={movie.Poster} alt={movie.Title}/>
-              : <p>No image</p>
-            }
-
+<Link to={`/${movie.imdbID}`}>
+            {movie.Poster !== "N/A" 
+  ? <img src={movie.Poster} alt={movie.Title} /> 
+  : <img src="https://placeholder.co/10x10" alt="Bildet er utilgjengelig" />
+}
             <h3>{movie.Title}</h3>
-
           </Link>
-
           <p>{movie.Year}</p>
-
         </article>
-
       ))}
     </>
   )

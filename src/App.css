@@ -16,7 +16,7 @@ main {
 
 
   h1{
-      color: rgb(54, 38, 23);
+      color: rgb(89, 33, 33);
 
     text-align: center;
     padding-top: 5%;
@@ -24,7 +24,7 @@ main {
     font-size: 70px;
     font-weight: lighter;
 
-    background-color: rgb(255, 251, 246);
+    background-color: rgb(224, 214, 202);
     }
 
   form{
@@ -106,7 +106,64 @@ width: 180px;
 }
 
 
+main.movie-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
+
+.movie-card {
+  /* lys bakgrunn beholdes */
+  background-color: #fff8f4;
+  color: black;
+  width: 40rem;
+ 
+  border-radius: 1rem;
+  padding: 1.5rem;
+
+  /* grid for tittel over, info venstre og bilde høyre */
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  grid-template-rows: auto 1fr;
+  gap: 1rem 1.5rem;
+  align-items: start;
+}
+
+/* Tittel øverst i midten av kortet, spenner over begge kolonner */
+.movie-card h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 1000;
+  padding-bottom: 0.5rem;
+  background-color: transparent;
+}
+
+/* Informasjonsseksjon til venstre */
+.movie-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.movie-card img {
+  width: 20rem;
+  height: auto;
+}
+
+/* Knapp-styling (valgfritt) */
+.movie-info a button {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: rgb(89, 33, 33);
+  color: #fff;
+  cursor: pointer;
+}
+
 
 
 

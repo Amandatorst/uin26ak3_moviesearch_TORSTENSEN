@@ -3,6 +3,8 @@ import History from "../components/History"
 import Bond from "../components/Bond"
 import OtherMovies from "../components/OtherMovies"
 import { Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
+
 
 export default function Home(){
 
@@ -89,9 +91,7 @@ onFocus={()=> setFocused(true)}
 </label>
 
 {focused ? <History history={history} setSearch={setSearch}/> : null}
-
 <button>Søk</button>
-
 </form>
 
 
@@ -101,26 +101,17 @@ onFocus={()=> setFocused(true)}
 <section id="searchresults">
 
 <h2>Søkeresultat</h2>
-
 <ul className="screen">
-
 {movies.map(movie => (
-
 <li key={movie.imdbID}>
-
-<Link to={`/${movie.Title}`}>
-
-{movie.Poster !== "N/A"
-? <img src={movie.Poster} alt={movie.Title}/>
-: <p>No image</p>
+<Link to={`/${movie.imdbID}`}>
+{movie.Poster !== "N/A" 
+  ? <img src={movie.Poster} alt={movie.Title} /> 
+  : <img src="https://placeholder.co/10x10" alt="Bildet er utilgjengelig" />
 }
 
-
-
 <h3>{movie.Title}</h3>
-
 </Link>
-
 <p>{movie.Year}</p>
 
 </li>
@@ -155,5 +146,4 @@ onFocus={()=> setFocused(true)}
 
 </main>
 )
-
 }
