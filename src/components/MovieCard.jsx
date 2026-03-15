@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 
 export default function MovieCard({ movie }) {
-  // Din originale placeholder-link
   const placeholder = "https://placehold.co/300x450?text=Ingen+plakat";
+  
+  // Vi lager en slug, men legger til ID-en til slutt for sikkerhet
+  const slug = movie.Title.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "");
+  // URL-en blir nå f.eks: /skyfall-tt1074638
+  const movieUrl = `/${slug}-${movie.imdbID}`;
 
-  // Vi bruker imdbID som slug for å være 100% sikre på at Movie.jsx finner filmen
   return (
     <li>
       <article>
-        <Link to={`/${movie.imdbID}`}>
-          <img
-            src={movie.Poster !== "N/A" ? movie.Poster : placeholder}
-            alt={movie.Title}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = placeholder;
-            }}
+        <Link to={movieUrl}>
+          <img 
+            src={movie.Poster !== "N/A" ? movie.Poster : placeholder} 
+            alt={movie.Title} 
+            onError={(e) => { e.target.src = placeholder; }}
           />
           <h3>{movie.Title}</h3>
         </Link>

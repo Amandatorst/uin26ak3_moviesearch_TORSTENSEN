@@ -1,93 +1,112 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import MovieCard from "../components/MovieCard";
 import History from "../components/History";
 import Bond from "../components/Bond";
 import OtherMovies from "../components/OtherMovies";
-import MovieCard from "../components/MovieCard"; // NY
-import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
-  const [focused, setFocused] = useState(false);
-  
-  const storedHistory = localStorage.getItem("search");
-  const [history, setHistory] = useState(storedHistory ? JSON.parse(storedHistory) : []);
-  
-  const apiKey = import.meta.env.VITE_APP_API_KEY;
 
-  useEffect(() => {
-    localStorage.setItem("search", JSON.stringify(history));
-  }, [history]);
+  const [history, setHistory] = useState(() => {
+  const saved = localStorage.getItem("movie_history");
+  return saved ? JSON.parse(saved) : [];
+});
 
-  const getMovies = async (value) => {
-    if (value.length < 3) {
-      setMovies([]);
-      return;
-    }
+// Lagrer historikken hver gang den endres
+useEffect(() => {
+  localStorage.setItem("movie_history", JSON.stringify(history));
+}, [history]);  const apiKey = import.meta.env.VITE_APP_API_KEY;
+
+  // 1. Funksjonen som henter filmer fra API
+  const fetchMovies = async (query) => {
+    if (query.length < 3) return; // Sikkerhetssjekk på lengde
 
     try {
-      const response = await fetch(`https://www.omdbapi.com/?s=${value}&type=movie&apikey=${apiKey}`);
+      const response = await fetch(
+        `https://www.omdbapi.com/?s=${query}&apikey=${apiKey}`
+      );
       const data = await response.json();
+
       if (data.Search) {
-        setMovies(data.Search.slice(0, 10));
+        setMovies(data.Search);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error("Feil ved henting av filmer:", error);
     }
   };
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-    getMovies(value);
-  };
+  // 2. Effekt som lytter på endringer i 'search'
+  // Denne sørger for at søket kjører når du velger fra History-menyen
+  useEffect(() => {
+    if (search.length >= 3) {
+      fetchMovies(search);
+    }
+  }, [search]); // Kjører hver gang 'search' endres
 
+  // 3. Håndterer manuelt søk (når man trykker på knappen)
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (search.trim()) {
-      setHistory((prev) => [...new Set([...prev, search])]); // Unngå duplikater i historikk
+    if (search.length >= 3) {
+      fetchMovies(search);
+      
+      // Legger til i historikk hvis det ikke allerede finnes
+      if (!history.includes(search)) {
+        setHistory([search, ...history]);
+      }
     }
   };
 
-  // ... (imports og states som før)
-return (
+  return (
   <main>
-    <h1>Filmregister</h1>
-    <form onSubmit={handleSubmit}>
-      <label>
-        Søk etter film
-        <input type="search" placeholder="Care Bears" onChange={handleChange} onFocus={() => setFocused(true)} />
-      </label>
-      {focused && <History history={history} setSearch={setSearch} />}
-      <button type="submit">Søk</button>
-    </form>
+    <header>
+      <h1>Filmregister</h1>
+    </header>
+      
+      <section className="search-section">
+        <label htmlFor="search-input">Søk etter film</label>
+        <form onSubmit={handleSubmit}>
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Søk etter film..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button type="submit">Søk</button>
+        </form>
 
-    {search.length >= 3 ? (
-      <section id="searchresults">
-        <h2>Søkeresultat</h2>
-        <ul className="screen">
-          {movies.map((movie) => (
-            <MovieCard key={movie.imdbID} movie={movie} />
-          ))}
-        </ul>
+        {/* Historikk-komponenten din lærers måte */}
+        <History history={history} setSearch={setSearch} />
       </section>
-    ) : (
-      <>
-        <section id="bondFilmer">
-          <h2>James Bond</h2>
-          <ul className="screen">
-            <Bond />
-          </ul>
-        </section>
-        <section id="alleFilmer">
-          <h2>Andre filmer</h2>
-          <ul className="screen">
-            <OtherMovies />
-          </ul>
-        </section>
-      </>
-    )}
-  </main>
-);
-}
 
+     <section>
+    {search.length < 3 ? (
+        <> 
+            <h2>
+                James Bond
+            </h2>
+            <ul className="screen">
+                <Bond />
+            </ul>
+            <h2>
+                Andre filmer
+            </h2>
+            <ul className="screen">
+                <OtherMovies />
+            </ul>
+        </>
+    ) : (
+        <>
+            <h2 style={{ textAlign: "center", color: "white" }}>Søkeresultat</h2>
+            <ul className="screen">
+                {movies.map((movie) => (
+                    <MovieCard key={movie.imdbID} movie={movie} />
+                ))}
+            </ul>
+        </>
+    )}
+</section>
+    </main>
+  );
+}
