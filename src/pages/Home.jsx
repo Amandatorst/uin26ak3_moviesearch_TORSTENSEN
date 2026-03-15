@@ -18,9 +18,8 @@ useEffect(() => {
   localStorage.setItem("movie_history", JSON.stringify(history));
 }, [history]);  const apiKey = import.meta.env.VITE_APP_API_KEY;
 
-  // 1. Funksjonen som henter filmer fra API
   const fetchMovies = async (query) => {
-    if (query.length < 3) return; // Sikkerhetssjekk på lengde
+    if (query.length < 3) return; // sjekk på lengde
 
     try {
       const response = await fetch(
@@ -36,15 +35,14 @@ useEffect(() => {
     }
   };
 
-  // 2. Effekt som lytter på endringer i 'search'
-  // Denne sørger for at søket kjører når du velger fra History-menyen
+  // Lytter etter endringer i 'search'
   useEffect(() => {
     if (search.length >= 3) {
       fetchMovies(search);
     }
   }, [search]); // Kjører hver gang 'search' endres
 
-  // 3. Håndterer manuelt søk (når man trykker på knappen)
+  // Håndterer manuelt søk (når man trykker på knappen)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (search.length >= 3) {
@@ -76,7 +74,6 @@ useEffect(() => {
           <button type="submit">Søk</button>
         </form>
 
-        {/* Historikk-komponenten din lærers måte */}
         <History history={history} setSearch={setSearch} />
       </section>
 

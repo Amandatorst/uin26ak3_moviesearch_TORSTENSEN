@@ -13,7 +13,7 @@ main {
 }
 
 h1 {
-    /* 1. Dekker hele bredden */
+    /* Dekker hele bredden */
     width: 100vw; 
     position: relative;
     left: 50%;
@@ -21,10 +21,9 @@ h1 {
     margin-left: -50vw;
     margin-right: -50vw;
 
-    /* 2. Flytter den ned fra toppen */
-    margin-top: 50px; /* Juster denne verdien for å vise mer av body-bakgrunnen */
+    /* Flytter den ned fra toppen */
+    margin-top: 50px; 
 
-    /* Din eksisterende styling */
     color: rgb(89, 33, 33);
     text-align: center;
     padding-top: 5%;
@@ -70,7 +69,7 @@ input:hover {
     
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 60px 30px;    /* 40px luft mellom rader, 30px mellom kolonner */
+    gap: 60px 30px;    /* Luft mellom rader og kolonner */
     justify-items: center; /* Sentrerer hvert enkelt kort inni grid-cellen sin */
 }
 
@@ -153,7 +152,6 @@ input:hover {
     margin: 20px auto;
     
     display: grid;
-    /* Kolonne 1 er tekst (fleksibel), Kolonne 2 er bilde (fast bredde) */
     grid-template-columns: 1fr 260px; 
     gap: 20px;
     align-items: start;
@@ -161,7 +159,6 @@ input:hover {
 
 /* Tvinger h1 til å ligge øverst og dekke begge kolonnene i kortet */
 .movie-card h1 {
-    /* Nullstiller "full bredde"-trikset */
     width: auto;
     position: static;
     margin: 0 0 20px 0;

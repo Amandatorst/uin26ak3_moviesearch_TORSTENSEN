@@ -7,7 +7,6 @@ export default function OtherMovies() {
 
   useEffect(() => {
     const getOtherMovies = async () => {
-      // Søker etter 'random' for å få varierte resultater
       const response = await fetch(`https://www.omdbapi.com/?s=movie&type=movie&apikey=${apiKey}`);
       const data = await response.json();
       if (data.Search) {
